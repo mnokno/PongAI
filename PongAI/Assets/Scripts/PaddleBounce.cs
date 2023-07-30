@@ -27,7 +27,7 @@ public class PaddleBounce : MonoBehaviour
         if (!isBouncing)
         { 
             Vector3 newVel = new Vector3(rb.velocity.x, 0f, -rb.velocity.z) * ball.speedIncreaseOnBounce;
-            float mag = newVel.magnitude;
+            float mag = Mathf.Min(newVel.magnitude, ball.maxSpeed);
             float moveMod = paddleMove.moveDirection == MoveDirection.Still ? 0 : (paddleMove.moveDirection == MoveDirection.Left ? -0.5f : 0.5f);
             newVel = newVel.normalized + new Vector3(moveMod, 0f, 0f);
             newVel = newVel.normalized * mag;

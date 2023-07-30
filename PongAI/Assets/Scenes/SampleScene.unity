@@ -1337,6 +1337,7 @@ MonoBehaviour:
   height: 10
   ballRadius: 0.25
   speedIncreaseOnBounce: 1.05
+  maxSpeed: 7.5
 --- !u!54 &1550699440
 Rigidbody:
   m_ObjectHideFlags: 0
