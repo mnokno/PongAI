@@ -1,2 +1,2 @@
 # PongAI
-Pong AI trained using multi-agent reinforcement learning, and an interface for testing the final agent.
+Pong AI - using reinforcement learning to train an agent to play the game of pong, contain an envoromnt for humn vs agent testing.
