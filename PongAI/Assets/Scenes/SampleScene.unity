@@ -1103,6 +1103,7 @@ MonoBehaviour:
   width: 6
   height: 10
   ballRadius: 0.25
+  paddleBounceCount: 0
 --- !u!1 &818136348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1526,6 +1527,7 @@ MonoBehaviour:
   upperAgent: {fileID: 1193749102}
   lowerAgent: {fileID: 602649233}
   ball: {fileID: 796687943}
+  bounceCountText: {fileID: 2071231931}
 --- !u!1 &1065950273
 GameObject:
   m_ObjectHideFlags: 0

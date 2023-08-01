@@ -65,6 +65,7 @@ namespace PongAI
             if (!isBouncing)
             {
                 matchManager.GetBall().Bounce(moveDirection);
+                AddReward(0.1f);
                 isBouncing = true;
                 // Delay the reset of 'isBouncing' to prevent multiple bounces in quick succession
                 Invoke("ResetBouncing", 0.1f);
