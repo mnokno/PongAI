@@ -32,6 +32,16 @@ namespace PongAI
         }
 
         /// <summary>
+        /// Returns the poison of the opponents paddle
+        /// </summary>
+        /// <param name="you">Paddle asking for the opponents position</param>
+        /// <returns>Position</returns>
+        public float GetOpponentPos(PalletAgent you)
+        {
+            return (you == upperAgent ? lowerAgent : upperAgent).transform.localPosition.x;
+        }
+
+        /// <summary>
         /// Should be called when a ball has past a paddle
         /// </summary>
         public void BallPassedPaddle()

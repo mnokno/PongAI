@@ -107,6 +107,16 @@ namespace PongAI
         }
 
         /// <summary>
+        /// Returns the velocity of the ball on the XZ plane
+        /// </summary>
+        /// <returns>Velocity of the ball on the XZ plane</returns>
+        public Vector2 GetVelocity()
+        {
+            return new Vector2(rb.velocity.x, rb.velocity.z);
+        }
+            
+
+        /// <summary>
         /// Makes the ball bounce bouncing with a non-edge object (in this case a paddle)
         /// Prevision of multiple bounces in quick succession upon collision should be handled by the other object, NOT THE BALL! 
         /// </summary>
