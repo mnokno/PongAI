@@ -24,7 +24,6 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(rb.velocity.magnitude);
         if (!isBouncing)
         {
             if (Mathf.Abs(transform.localPosition.x) > width * 0.5f - ballRadius)

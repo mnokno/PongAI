@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum MoveDirection
 {
-    Still,
-    Left,
-    Right
+    Still = 0,
+    Left = 1,
+    Right = 2
 }
