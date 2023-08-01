@@ -7,6 +7,10 @@ using Unity.MLAgents.Sensors;
 
 namespace PongAI
 {
+    /// <summary>
+    /// Simple agent implementation for pong paddle control. 
+    /// Yes I know its spelled wrong but, I kinda like it now.
+    /// </summary>
     public class PalletAgent : Agent
     {
         /// <summary>
@@ -16,19 +20,72 @@ namespace PongAI
         /// <summary>
         /// Weather or note the paddle can be moved using arrow keys
         /// </summary>
-        public bool useArrowKeys = true;
+        [SerializeField] private bool useArrowKeys = true;
         /// <summary>
         /// Weather or note the paddle can be moved using A and D keys
         /// </summary>
-        public bool useAD = true;
+        [SerializeField] private bool useAD = true;
         /// <summary>
         /// Speed of the paddle movement
         /// </summary>
-        public float speed = 4f;
+        [SerializeField] private float speed = 4f;
         /// <summary>
         /// Prevents the paddle from moving outside of the board
         /// </summary>
-        public float boardWidth = 6f;
+        [SerializeField] private float boardWidth = 6f;
+        /// <summary>
+        /// Stores reference to a match manager for this game, there may be more than one game running at the same time
+        /// </summary>
+        private MatchManager matchManager;
+        /// <summary>
+        /// Used to prevent multiple bounces in quick succession upon collision
+        /// </summary>
+        private bool isBouncing = false;
+
+
+        /// <summary>
+        /// Start is called before the first frame update
+        /// </summary>
+        public void Start()
+        {
+            matchManager = GetComponentInParent<MatchManager>();
+        }
+
+        /// <summary>
+        /// Called when the paddle collides with the ball
+        /// </summary>
+        /// <param name="other">The ball collider</param>
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!isBouncing)
+            {
+                matchManager.GetBall().Bounce(moveDirection);
+                isBouncing = true;
+                // Delay the reset of 'isBouncing' to prevent multiple bounces in quick succession
+                Invoke("ResetBouncing", 0.1f);
+            }
+        }
+
+        /// <summary>
+        /// Resets isBouncing
+        /// </summary>
+        private void ResetBouncing()
+        {
+            isBouncing = false;
+        }
+
+        /// <summary>
+        /// Call to rest the position of the paddle, should be called at the end of each episode
+        /// </summary>
+        public void ResetPosition()
+        {
+            moveDirection = MoveDirection.Still;
+            transform.localPosition = new Vector3(0f, transform.localPosition.y, transform.localPosition.z);
+            StopAllCoroutines();
+            isBouncing = false;
+        }
+
+        #region ML Agents Overrides and Related
 
         public override void OnActionReceived(ActionBuffers actions)
         {
@@ -84,6 +141,8 @@ namespace PongAI
 
             discreteActions[0] = (int)moveDirection;
         }
+
+        #endregion
     }
 }
     
