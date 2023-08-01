@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace PongAI
 {
@@ -21,7 +22,20 @@ namespace PongAI
         /// Reference to the ball object
         /// </summary>
         [SerializeField] private Ball ball;
+        /// <summary>
+        /// Reference to text output for bounce count
+        /// </summary>
+        [SerializeField] private TextMeshProUGUI bounceCountText;
 
+
+        /// <summary>
+        /// Update is called once per frame
+        /// </summary>
+        public void Update()
+        {
+            bounceCountText.text = ball.paddleBounceCount.ToString();
+        }
+        
         /// <summary>
         /// Getter for ball object currently in play
         /// </summary>

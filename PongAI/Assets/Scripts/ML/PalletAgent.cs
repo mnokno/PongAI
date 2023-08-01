@@ -41,6 +41,10 @@ namespace PongAI
         /// Used to prevent multiple bounces in quick succession upon collision
         /// </summary>
         private bool isBouncing = false;
+        /// <summary>
+        /// True if its the upper agent, false otherwise
+        /// </summary>
+        private bool isUpper;
 
 
         /// <summary>
@@ -49,6 +53,7 @@ namespace PongAI
         public void Start()
         {
             matchManager = GetComponentInParent<MatchManager>();
+            isUpper = transform.localPosition.z > 0;
         }
 
         /// <summary>
@@ -121,7 +126,9 @@ namespace PongAI
 
         public override void CollectObservations(VectorSensor sensor)
         {
-            base.CollectObservations(sensor);
+            sensor.AddObservation(transform.localPosition.x);
+            sensor.AddObservation(isUpper ? matchManager.GetBall().GetVelocity() : -matchManager.GetBall().GetVelocity());
+            sensor.AddObservation(matchManager.GetOpponentPos(this));
         }
 
         /// <summary>

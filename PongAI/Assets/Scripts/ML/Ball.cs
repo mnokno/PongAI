@@ -46,6 +46,10 @@ namespace PongAI
         /// Stores reference to a match manager for this game, there may be more than one game running at the same time
         /// </summary>
         private MatchManager matchManager;
+        /// <summary>
+        /// Stores the number of paddle bounces for this ball
+        /// </summary>
+        public int paddleBounceCount = 0;
 
 
         /// <summary>
@@ -96,6 +100,7 @@ namespace PongAI
             rb.velocity = startVel.normalized * speed;
             StopAllCoroutines();
             isBouncing = false;
+            paddleBounceCount = 0;
         }
 
         /// <summary>
@@ -123,6 +128,7 @@ namespace PongAI
         /// <param name="moveDirectionOfOtherOject">The movement direction of the object the ball collided with</param>
         public void Bounce(MoveDirection moveDirectionOfOtherOject = MoveDirection.Still)
         {
+            paddleBounceCount++;
             Vector3 newVel = new Vector3(rb.velocity.x, 0f, -rb.velocity.z) * speedIncreaseOnBounce;
             float mag = Mathf.Min(newVel.magnitude, maxSpeed);
             float moveMod = moveDirectionOfOtherOject == MoveDirection.Still ? 0 : (moveDirectionOfOtherOject == MoveDirection.Left ? -0.5f : 0.5f);
