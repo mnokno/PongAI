@@ -89,6 +89,9 @@ namespace PongAI
 
         public override void OnActionReceived(ActionBuffers actions)
         {
+            // Small reward for surviving
+            AddReward(0.01f);
+            
             // 0 no move, 1 left, 2 right
             if (actions.DiscreteActions[0] == (int)MoveDirection.Still)
             {
@@ -100,6 +103,9 @@ namespace PongAI
                 Vector3 newPos = transform.localPosition - new Vector3(Time.deltaTime * speed, 0f, 0f);
                 newPos.x = Mathf.Abs(newPos.x) > boardWidth / 2f ? boardWidth / 2f * Mathf.Sign(newPos.x) : newPos.x;
                 transform.localPosition = newPos;
+
+                // Small loss for moving, tell our agent that its preferred not to move if possible
+                AddReward(0.005f);
             }
             else if (actions.DiscreteActions[0] == (int)MoveDirection.Right)
             {
@@ -107,6 +113,9 @@ namespace PongAI
                 Vector3 newPos = transform.localPosition + new Vector3(Time.deltaTime * speed, 0f, 0f);
                 newPos.x = Mathf.Abs(newPos.x) > boardWidth / 2f ? boardWidth / 2f * Mathf.Sign(newPos.x) : newPos.x;
                 transform.localPosition = newPos;
+
+                // Small loss for moving, tell our agent that its preferred not to move if possible
+                AddReward(0.005f);
             }
         }
 

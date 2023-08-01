@@ -1,26 +1,4 @@
 {
-    "BounceBall": {
-        "checkpoints": [
-            {
-                "steps": 2304,
-                "file_path": "results\\ppo\\BounceBall\\BounceBall-2304.onnx",
-                "reward": null,
-                "creation_time": 1690924776.1240933,
-                "auxillary_file_paths": [
-                    "results\\ppo\\BounceBall\\BounceBall-2304.pt"
-                ]
-            }
-        ],
-        "final_checkpoint": {
-            "steps": 2304,
-            "file_path": "results\\ppo\\BounceBall.onnx",
-            "reward": null,
-            "creation_time": 1690924776.1240933,
-            "auxillary_file_paths": [
-                "results\\ppo\\BounceBall\\BounceBall-2304.pt"
-            ]
-        }
-    },
     "metadata": {
         "stats_format_version": "0.3.0",
         "mlagents_version": "0.30.0",
