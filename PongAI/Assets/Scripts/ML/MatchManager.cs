@@ -76,8 +76,8 @@ namespace PongAI
         /// </summary>
         public void BallPassedPaddle()
         {
-            float winRew = 1;
-            float lossRew = -1;
+            float winRew = 0f;
+            float lossRew = -1f;
             if (ball.transform.localPosition.z > 0)
             {
                 upperAgent.AddReward(lossRew);
