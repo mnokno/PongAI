@@ -76,7 +76,7 @@ namespace PongAI
                     rb.velocity = newVel;
                 }
 
-                if (Mathf.Abs(transform.position.z) > height * 0.5f - ballRadius)
+                if (Mathf.Abs(transform.localPosition.z) > height * 0.5f - ballRadius)
                 {
                     matchManager.BallPassedPaddle();
                 }
@@ -119,7 +119,15 @@ namespace PongAI
         {
             return new Vector2(rb.velocity.x, rb.velocity.z);
         }
-            
+
+        /// <summary>
+        /// Returns the local position of the ball on the XZ plane
+        /// </summary>
+        /// <returns>Local position of the ball on the XZ plane</returns>
+        public Vector2 GetPostion()
+        {
+            return new Vector2(transform.localPosition.x, transform.localPosition.z);
+        }    
 
         /// <summary>
         /// Makes the ball bounce bouncing with a non-edge object (in this case a paddle)

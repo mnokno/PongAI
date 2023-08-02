@@ -95,13 +95,12 @@ namespace PongAI
 
         public override void OnActionReceived(ActionBuffers actions)
         {
-            // Small reward for surviving
-            AddReward(0.01f);
-            
             // 0 no move, 1 left, 2 right
             if (actions.DiscreteActions[0] == (int)MoveDirection.Still)
             {
                 // No moment
+                // Small reward for surviving when not moving
+                AddReward(0.001f);
             }
             else if (actions.DiscreteActions[0] == (int)MoveDirection.Left)
             {
@@ -109,9 +108,6 @@ namespace PongAI
                 Vector3 newPos = transform.localPosition - new Vector3(Time.deltaTime * speed, 0f, 0f);
                 newPos.x = Mathf.Abs(newPos.x) > boardWidth / 2f ? boardWidth / 2f * Mathf.Sign(newPos.x) : newPos.x;
                 transform.localPosition = newPos;
-
-                // Small loss for moving, tell our agent that its preferred not to move if possible
-                AddReward(0.005f);
             }
             else if (actions.DiscreteActions[0] == (int)MoveDirection.Right)
             {
@@ -119,18 +115,30 @@ namespace PongAI
                 Vector3 newPos = transform.localPosition + new Vector3(Time.deltaTime * speed, 0f, 0f);
                 newPos.x = Mathf.Abs(newPos.x) > boardWidth / 2f ? boardWidth / 2f * Mathf.Sign(newPos.x) : newPos.x;
                 transform.localPosition = newPos;
-
-                // Small loss for moving, tell our agent that its preferred not to move if possible
-                AddReward(0.005f);
             }
         }
 
         public override void CollectObservations(VectorSensor sensor)
         {
             sensor.AddObservation(transform.localPosition.x);
-            sensor.AddObservation(isUpper ? matchManager.GetBall().GetVelocity() : -matchManager.GetBall().GetVelocity());
-            sensor.AddObservation(matchManager.GetOpponentPos(this));
+            if (isUpper)
+            {
+                sensor.AddObservation(matchManager.GetBall().GetPostion());
+                sensor.AddObservation(matchManager.GetBall().GetVelocity());
+            }
+            else
+            {
+                Vector2 pos = matchManager.GetBall().GetPostion();
+                Vector2 vel = matchManager.GetBall().GetVelocity();
+
+                pos.x = -pos.x;
+                vel.x = -vel.x;
+
+                sensor.AddObservation(pos);
+                sensor.AddObservation(vel);
+            }
         }
+            
 
         /// <summary>
         /// For the testing, overrides action provided to the agent

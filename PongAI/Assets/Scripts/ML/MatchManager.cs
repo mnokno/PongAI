@@ -60,9 +60,19 @@ namespace PongAI
         /// </summary>
         public void BallPassedPaddle()
         {
-            float reward = ball.transform.localPosition.z > 0 ? 1f : -1f;
-            upperAgent.AddReward(reward);
-            lowerAgent.AddReward(-reward);
+            float winRew = 1f;
+            float lossRew = -1f;
+            if (ball.transform.localPosition.z > 0)
+            {
+                upperAgent.AddReward(lossRew);
+                lowerAgent.AddReward(winRew);
+            }
+            else
+            {
+                upperAgent.AddReward(winRew);
+                lowerAgent.AddReward(lossRew);
+            }
+
             upperAgent.EndEpisode();
             lowerAgent.EndEpisode();
             upperAgent.ResetPosition();
