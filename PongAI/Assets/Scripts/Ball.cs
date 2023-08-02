@@ -50,6 +50,10 @@ namespace PongAI
         /// Stores the number of paddle bounces for this ball
         /// </summary>
         public int paddleBounceCount = 0;
+        /// <summary>
+        /// Used to ensure that the ball does not drift up over time
+        /// </summary>
+        private float ballY;
 
 
         /// <summary>
@@ -59,6 +63,7 @@ namespace PongAI
         {
             rb = GetComponent<Rigidbody>();
             matchManager = GetComponentInParent<MatchManager>();
+            ballY = transform.localPosition.y;
             ResetBall();
         }
 
@@ -92,7 +97,7 @@ namespace PongAI
         /// </summary>
         public void ResetBall()
         {
-            transform.localPosition = new Vector3(0f, transform.localPosition.y, 0f);
+            transform.localPosition = new Vector3(0f, ballY, 0f);
             Vector3 startVel = new Vector3(
                 (Random.Range(0f, 1f) > 0.5f ? speed : -speed) * Random.Range(0.5f, 4f),
                 0f,
