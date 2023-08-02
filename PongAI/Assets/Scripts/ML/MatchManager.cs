@@ -37,7 +37,7 @@ namespace PongAI
         public void Update()
         {
             bounceCountText.text = ball.paddleBounceCount.ToString();
-            if (ball.paddleBounceCount > 100)
+            if (ball.paddleBounceCount > 50)
             {
                 // Small negative punishment for not ending the game
                 upperAgent.AddReward(-0.05f);

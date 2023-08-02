@@ -94,7 +94,7 @@ namespace PongAI
         {
             transform.localPosition = new Vector3(0f, transform.localPosition.y, 0f);
             Vector3 startVel = new Vector3(
-                (Random.Range(0f, 1f) > 0.5f ? speed : -speed) * Random.Range(0.5f, 2f),
+                (Random.Range(0f, 1f) > 0.5f ? speed : -speed) * Random.Range(0.5f, 4f),
                 0f,
                 (Random.Range(0f, 1f) > 0.5f ? speed : -speed) * Random.Range(0.5f, 2f));
             rb.velocity = startVel.normalized * speed;

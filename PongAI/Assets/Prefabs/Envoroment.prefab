@@ -146,11 +146,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192369b1abcb4a94bb5b0cf9c831a9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 3
   maxSpeed: 6
-  speedIncreaseOnBounce: 1.05
+  speedIncreaseOnBounce: 1.1
   width: 6
-  height: 10
+  height: 10.2
   ballRadius: 0.25
   paddleBounceCount: 0
 --- !u!1 &2308044928747795217
@@ -483,6 +483,7 @@ MonoBehaviour:
   lowerAgent: {fileID: 324473349617244625}
   ball: {fileID: 7827697257303687920}
   bounceCountText: {fileID: 41433819805072569}
+  boardHeight: 10.2
 --- !u!1 &3316373415214162648
 GameObject:
   m_ObjectHideFlags: 0
