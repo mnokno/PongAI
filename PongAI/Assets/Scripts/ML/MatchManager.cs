@@ -26,7 +26,10 @@ namespace PongAI
         /// Reference to text output for bounce count
         /// </summary>
         [SerializeField] private TextMeshProUGUI bounceCountText;
-
+        /// <summary>
+        /// Height of the board
+        /// </summary>
+        public float boardHeight = 10f;
 
         /// <summary>
         /// Update is called once per frame
@@ -34,6 +37,19 @@ namespace PongAI
         public void Update()
         {
             bounceCountText.text = ball.paddleBounceCount.ToString();
+            if (ball.paddleBounceCount > 100)
+            {
+                // Small negative punishment for not ending the game
+                upperAgent.AddReward(-0.05f);
+                lowerAgent.AddReward(-0.05f);
+                
+                upperAgent.EndEpisode();
+                lowerAgent.EndEpisode();
+                upperAgent.ResetPosition();
+                lowerAgent.ResetPosition();
+
+                ball.ResetBall();
+            }
         }
         
         /// <summary>
@@ -60,8 +76,8 @@ namespace PongAI
         /// </summary>
         public void BallPassedPaddle()
         {
-            float winRew = 1f;
-            float lossRew = -1f;
+            float winRew = 1;
+            float lossRew = -1;
             if (ball.transform.localPosition.z > 0)
             {
                 upperAgent.AddReward(lossRew);

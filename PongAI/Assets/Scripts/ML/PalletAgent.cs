@@ -37,6 +37,7 @@ namespace PongAI
         /// Stores reference to a match manager for this game, there may be more than one game running at the same time
         /// </summary>
         private MatchManager matchManager;
+
         /// <summary>
         /// Used to prevent multiple bounces in quick succession upon collision
         /// </summary>
@@ -65,7 +66,7 @@ namespace PongAI
             if (!isBouncing)
             {
                 matchManager.GetBall().Bounce(moveDirection);
-                AddReward(0.1f);
+                AddReward(Mathf.Max(0.1f / matchManager.GetBall().paddleBounceCount, 0.01f));
                 isBouncing = true;
                 // Delay the reset of 'isBouncing' to prevent multiple bounces in quick succession
                 Invoke("ResetBouncing", 0.1f);
@@ -100,7 +101,7 @@ namespace PongAI
             {
                 // No moment
                 // Small reward for surviving when not moving
-                AddReward(0.001f);
+                AddReward(0.0001f);
             }
             else if (actions.DiscreteActions[0] == (int)MoveDirection.Left)
             {
@@ -120,23 +121,24 @@ namespace PongAI
 
         public override void CollectObservations(VectorSensor sensor)
         {
-            sensor.AddObservation(transform.localPosition.x);
-            if (isUpper)
-            {
-                sensor.AddObservation(matchManager.GetBall().GetPostion());
-                sensor.AddObservation(matchManager.GetBall().GetVelocity());
-            }
-            else
-            {
-                Vector2 pos = matchManager.GetBall().GetPostion();
-                Vector2 vel = matchManager.GetBall().GetVelocity();
+            sensor.AddObservation(transform.localPosition.x / (boardWidth / 2f));
+            Vector2 pos = matchManager.GetBall().GetPostion();
+            Vector2 vel = matchManager.GetBall().GetVelocity();
 
+            // Normalize input values
+            pos.x = pos.x / (boardWidth / 2f);
+            pos.y = pos.y / (matchManager.boardHeight / 2f);
+            vel = vel / (matchManager.GetBall().maxSpeed / 2f);
+            
+            if (!isUpper)
+            {
+                // Flip the x values if the its the lower player
                 pos.x = -pos.x;
                 vel.x = -vel.x;
-
-                sensor.AddObservation(pos);
-                sensor.AddObservation(vel);
             }
+
+            sensor.AddObservation(pos);
+            sensor.AddObservation(vel);
         }
             
 
