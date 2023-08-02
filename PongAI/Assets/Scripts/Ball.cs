@@ -140,7 +140,7 @@ namespace PongAI
             Vector3 newVel = new Vector3(rb.velocity.x, 0f, -rb.velocity.z) * speedIncreaseOnBounce;
             float mag = Mathf.Min(newVel.magnitude, maxSpeed);
             float moveMod = moveDirectionOfOtherOject == MoveDirection.Still ? 0 : (moveDirectionOfOtherOject == MoveDirection.Left ? -0.5f : 0.5f);
-            newVel = newVel.normalized + new Vector3(moveMod, 0f, 0f);
+            newVel = newVel + new Vector3(moveMod, 0f, 0f);
             newVel = newVel.normalized * mag;
             rb.velocity = newVel;
         }
