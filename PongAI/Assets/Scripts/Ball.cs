@@ -88,7 +88,7 @@ namespace PongAI
 
                 isBouncing = true;
                 // Delay the reset of 'isBouncing' to prevent multiple bounces in quick succession
-                Invoke("ResetBouncing", 0.1f);
+                Invoke("ResetBouncing", 0.2f);
             }
         }
 

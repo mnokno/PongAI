@@ -69,7 +69,7 @@ namespace PongAI
                 AddReward(Mathf.Max(0.1f / Mathf.Max(1f, (matchManager.GetBall().paddleBounceCount / 4f)), 0.01f));
                 isBouncing = true;
                 // Delay the reset of 'isBouncing' to prevent multiple bounces in quick succession
-                Invoke("ResetBouncing", 0.1f);
+                Invoke("ResetBouncing", 0.2f);
             }
         }
 
