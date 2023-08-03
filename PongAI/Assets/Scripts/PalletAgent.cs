@@ -94,6 +94,10 @@ namespace PongAI
 
         #region ML Agents Overrides and Related
 
+        /// <summary>
+        /// Called when the agent is revives actions from the brain (our model)
+        /// </summary>
+        /// <param name="actions">Actions from the brain (our model)</param>
         public override void OnActionReceived(ActionBuffers actions)
         {
             // 0 no move, 1 left, 2 right
@@ -119,6 +123,10 @@ namespace PongAI
             }
         }
 
+        /// <summary>
+        /// Collects observations for the agent
+        /// </summary>
+        /// <param name="sensor">Empty sensor to which observations will be added to</param>
         public override void CollectObservations(VectorSensor sensor)
         {
             sensor.AddObservation(transform.localPosition.x / (boardWidth / 2f));
